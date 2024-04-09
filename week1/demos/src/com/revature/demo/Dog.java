@@ -53,10 +53,12 @@ public class Dog extends Object {
         this.size = size;
     }
 
+    // Static methods can be called from the class without the need of an instantiated object
     public static String bark() {
         return "WOOF!";
     }
 
+    // Overriding the toString() method allows us to print the object as a String
     @Override
     public String toString() {
         return "Dog [breed=" + breed + ", age=" + age + ", color=" + color + ", size=" + size + "]";
@@ -73,6 +75,8 @@ public class Dog extends Object {
         return result;
     }
 
+    // Overriding the equals() and hashCode() methods allows us to compare objects
+    // of the same class
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
