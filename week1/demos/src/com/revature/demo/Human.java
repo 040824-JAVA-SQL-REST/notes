@@ -1,7 +1,6 @@
 package com.revature.demo;
 
 public class Human {
-    // attributes
     private String name;
     private int age;
     private double height;
@@ -9,6 +8,7 @@ public class Human {
     private boolean isAttractive;
     private boolean hasGf;
 
+    // Remember that clases need a default constructor!
     public Human() {
     }
 
