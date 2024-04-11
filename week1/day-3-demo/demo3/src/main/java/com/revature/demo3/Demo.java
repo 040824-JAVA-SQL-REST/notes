@@ -17,6 +17,9 @@ public class Demo {
         Float floatz = 1.0f;
         Double doublez = 1.0;
 
+        //Using a wrapper class allows you to call methods on primitive types.
+        //A  primitive type couldn't do this withhout a wrapper.
+
         // This is true
         boolean isLetter = charz.isLetter('a');
 
@@ -30,8 +33,10 @@ public class Demo {
 
         // What if we want to make it mutable?
         // use a List<T>
-        List<Integer> listz = new ArrayList<>();
+        List<Integer> listz = new ArrayList<>(); //This creates a list of integer objects.
     }
+
+    //Helper methods help other classes but are private and can't be called outside of scope
 
     /* ########## Helper Methods ########## */
     // Can only be access from this class

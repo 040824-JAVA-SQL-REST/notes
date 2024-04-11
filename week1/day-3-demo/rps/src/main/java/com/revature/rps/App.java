@@ -28,6 +28,7 @@ public class App {
         new RpsScreen(p1, p2, rpsService, scan).startGame();
     }
 
+    //A helper class for getting player names
     private String getPlayerName(Scanner scan) {
         System.out.print("Please enter your player name: ");
         String pName = "";
