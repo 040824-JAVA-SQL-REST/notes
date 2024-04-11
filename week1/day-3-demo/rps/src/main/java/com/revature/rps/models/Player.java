@@ -7,10 +7,12 @@ public class Player {
     private int lose;
     private int draw;
 
+    //Default Constructor
     public Player() {
 
     }
 
+    //Constructor
     public Player(String name, boolean isCPU, int win, int lose, int draw) {
         this.name = name;
         this.isCPU = isCPU;
@@ -18,6 +20,8 @@ public class Player {
         this.lose = lose;
         this.draw = draw;
     }
+
+    //Getter and Setter methods
 
     public String getName() {
         return name;
