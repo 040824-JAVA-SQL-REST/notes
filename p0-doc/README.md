@@ -124,3 +124,83 @@ public class StartScreen extends BaseScreen {
 	}
 }
 ```
+
+## Singleton Design Pattern
+
+We need to use the Singleton design pattern to ensure that only one instance of the database connection is created. This is important because creating multiple instances of the database connection can lead to performance issues.
+
+```java
+public class DatabaseSingleton {
+  private static DatabaseSingleton instance;
+  private Connection conn;
+
+  private Singleton() {
+    InputStream is = getClass().getResourceAsStream("application.properties");
+    Properties props = new Properties();
+    props.load(is);
+
+    Class.forName(props.getProperty("driver"));
+    conn = DriverManager.getConnection(props.getProperty("url"), props.getProperty("user"), props.getProperty("password"));
+  }
+
+  public static DatabaseSingleton getInstance() throws SQLException {
+    if (instance == null || instance.getInstance().isClosed()) {
+      instance = new DatabaseSingleton();
+    }
+    return instance;
+  }
+
+  public Connection getConnection() {
+    return conn;
+  }
+}
+```
+
+## Prepared Statements and Result Sets
+
+The below code snippets demonstrate how to use prepared statements and result sets to interact with the database. Prepared statements are used to execute SQL queries with parameters, while result sets are used to retrieve data from the database.
+
+```java
+public List<T> findAll() {
+  List<T> list = new ArrayList<>();
+
+  try (Connection conn = DatabaseSingleton.getInstance().getConnection();
+       PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tableName);
+       ResultSet rs = ps.executeQuery()) {
+
+    while (rs.next()) {
+      Object obj = new Object();
+      obj.setStringField(rs.getString("column_name"));
+      obj.setIntField(rs.getInt("column_name"));
+      list.add(obj);
+    }
+  } catch (SQLException e) {
+    e.printStackTrace();
+  } catch (IOException e) {
+    e.printStackTrace();
+  }
+
+  return list;
+}
+```
+
+The code below demonstrates how to use prepared statements to insert data into the database. Notice we do not use a ResultSet in this case because we are not retrieving data from the database.
+
+```java
+public Object save(Object obj) {
+  try (Connection conn = DatabaseSingleton.getInstance().getConnection();
+       PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tableName + " (column_name1, column_name2) VALUES (?, ?)")) {
+
+    ps.setString(1, obj.getStringField());
+    ps.setInt(2, obj.getIntField());
+    ps.executeUpdate();
+
+  } catch (SQLException e) {
+    e.printStackTrace();
+  } catch (IOException e) {
+    e.printStackTrace();
+  }
+
+  return obj;
+}
+```
