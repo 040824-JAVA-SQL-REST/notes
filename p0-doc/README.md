@@ -204,3 +204,43 @@ public Object save(Object obj) {
   return obj;
 }
 ```
+
+## SQL Trigger Example
+
+This is a trigger function that updates the updated_time column whenever a row is updated.
+
+```sql
+create or replace function update_timestamp()
+returns trigger as $$
+begin
+  new.updated_time := current_timestamp;
+  return new;
+end;
+$$ language plpgsql;
+```
+
+Attaching the trigger to a table:
+
+```sql
+create trigger set_roles_timestamp
+before insert or update on roles
+for each row
+execute function update_timestamp();
+```
+
+## Creating an Index Example
+
+```sql
+create index idx_reviews_restaurant_id on reviews (restaurant_id);
+create index idx_reviews_user_id on reviews (user_id);
+```
+
+# Creating a View Example
+
+```sql
+create view users_favorite_restaurants as
+select u.id as user_id, r.name as restaurant_name
+from favorites f
+join users u on f.user_id = u.id
+join restaurants r on f.restaurant_id = r.id;
+```
